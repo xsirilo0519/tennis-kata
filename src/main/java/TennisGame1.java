@@ -28,14 +28,10 @@ public class TennisGame1 implements TennisGame {
         {
             score = getEqualScore();
         }
-
-        else if (player1score>=4 || player2score>=4)
+        else if (isPlayerWin())
         {
-            int minusResult = player1score-player2score;
-            if (minusResult==1) score ="Advantage player1";
-            else if (minusResult ==-1) score ="Advantage player2";
-            else if (minusResult>=2) score = "Win for player1";
-            else score ="Win for "+player2Name;
+            score = getEndMatch();
+
         }
         else
         {
@@ -47,6 +43,21 @@ public class TennisGame1 implements TennisGame {
             }
         }
         return score;
+    }
+
+    //Extraccion de metodo
+    private String getEndMatch() {
+        String score;
+        final int minusResult = player1score-player2score;
+        if (minusResult==1) score ="Advantage player1";
+        else if (minusResult ==-1) score ="Advantage player2";
+        else if (minusResult>=2) score = "Win for player1";
+        else score ="Win for "+player2Name;
+        return score;
+    }
+
+    private boolean isPlayerWin() {
+        return player1score>=4 || player2score>=4;
     }
 
     //Extraccion de metodos con condicional
