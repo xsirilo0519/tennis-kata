@@ -6,7 +6,7 @@ public class TennisGame2 implements TennisGame
 
     private final String player1Name;
     private final String player2Name;
-    private static final String DEUDE="Deude";
+    private static final String DEUDE="Deuce";
     private final String[] listaSets = {"Love", "Fifteen", "Thirty", "Forty"};
     public TennisGame2(String player1Name, String player2Name) {
         this.player1Name = player1Name;
