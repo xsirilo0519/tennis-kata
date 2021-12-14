@@ -6,7 +6,7 @@ public class TennisGame1 implements TennisGame {
     private int player2score = 0;
     private final String player1Name;
     private final String player2Name;
-    private final int maxScore=4;
+    private static final int MAXSCORE=4;
     private final String[] listSqualScore = {"Love-All", "Fifteen-All", "Thirty-All","Deuce"};
     private final String[] listScore = {"Love", "Fifteen", "Thirty","Forty"};
     public TennisGame1(String player1Name, String player2Name) {
@@ -23,8 +23,9 @@ public class TennisGame1 implements TennisGame {
             player2score += 1;
     }
     //encapsulamiento
+    //se queria utilizar solo el return pero aumentaba el complexity por lo que se opto poner variable
     public String getScore() {
-        String score = "";
+        String score;
         if (isEqualScore())
         {
             score = getEqualScore();
@@ -68,7 +69,7 @@ public class TennisGame1 implements TennisGame {
     }
     //encapsulamiento
     private boolean isPlayerWin() {
-        return getPlayer1score()>=maxScore || getPlayer2score()>=maxScore;
+        return getPlayer1score()>=MAXSCORE || getPlayer2score()>=MAXSCORE;
     }
 
     //Extraccion de metodos con condicional
