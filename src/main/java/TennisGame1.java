@@ -6,6 +6,7 @@ public class TennisGame1 implements TennisGame {
     private int player2score = 0;
     private final String player1Name;
     private final String player2Name;
+    private final int maxScore=4;
     private final String[] listSqualScore = {"Love-All", "Fifteen-All", "Thirty-All","Deuce"};
     private final String[] listScore = {"Love", "Fifteen", "Thirty","Forty"};
     public TennisGame1(String player1Name, String player2Name) {
@@ -14,66 +15,97 @@ public class TennisGame1 implements TennisGame {
     }
 
     //Se pone to Equals y se utilizan las variables existentes
+    //encapsulamiento
     public void wonPoint(String playerName) {
-        if (playerName.equals(player1Name))
+        if (playerName.equals(getPlayer1Name()))
             player1score += 1;
         else
             player2score += 1;
     }
-
+    //encapsulamiento
     public String getScore() {
         String score = "";
-        int tempScore=0;
         if (isEqualScore())
         {
             score = getEqualScore();
         }
         else if (isPlayerWin())
         {
-            score = getEndMatch();
-
+            score = getInfoMatch();
         }
         else
         {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = player1score;
-                else { score+="-"; tempScore = player2score;}
-                score = getPlayerScore(score, tempScore);
-            }
+            score=printScoreMatch(getPlayer1score(),getPlayer2score());
         }
         return score;
     }
-
-    //Extraccion de metodo
-    private String getEndMatch() {
-        String score;
-        final int minusResult = player1score-player2score;
-        if (minusResult==1) score ="Advantage player1";
-        else if (minusResult ==-1) score ="Advantage player2";
-        else if (minusResult>=2) score = "Win for player1";
-        else score ="Win for "+player2Name;
-        return score;
+    //Extraccion de metodo y simplificacion de condicional
+    //encapsulamiento
+    private String printScoreMatch(int player1score,int player2score){
+        return getPlayerScore(player1score)+"-"+getPlayerScore(player2score);
     }
 
+    //Extraccion de metodo
+    //Simplificar condicional
+    //encapsulamiento
+    private String getInfoMatch() {
+        int minusResult = getPlayer1score()-getPlayer2score();
+        return isAdvantage(minusResult)?getAdvantage(minusResult):getWinPlayer(minusResult);
+    }
+    //Simplificar condicional
+    private boolean isAdvantage(int minusResult) {
+        return isMayor(minusResult,-2)&&minusResult<2;
+    }
+    //Simplificar condicional
+    //encapsulamiento
+    private String getWinPlayer(int minusResult ){
+        return "Win for "+(minusResult>=2?getPlayer1Name():getPlayer2Name());
+    }
+    //Simplificar condicional
+    //encapsulamiento
+    private String getAdvantage(int minusResult ){
+        return "Advantage "+(minusResult==1?getPlayer1Name():getPlayer2Name());
+    }
+    //encapsulamiento
     private boolean isPlayerWin() {
-        return player1score>=4 || player2score>=4;
+        return getPlayer1score()>=maxScore || getPlayer2score()>=maxScore;
     }
 
     //Extraccion de metodos con condicional
+    //encapsulamiento
     private boolean isEqualScore() {
-        return player1score==player2score;
+        return getPlayer1score()==getPlayer2score();
     }
     //Extraccion de metodos
     //Simplificar condicional
-    private String getPlayerScore(String score, int tempScore) {
-        score+=listScore[tempScore];
-        return score;
+    private String getPlayerScore( int tempScore) {
+        return listScore[tempScore];
     }
 
     //Extraccion de metodos
     //Simplificar condicional
+    //encapsulamiento
     private String getEqualScore() {
-        return player1score>2?listSqualScore[3]:listSqualScore[player1score];
+        return isMayor(getPlayer1score(),2)?listSqualScore[3]:listSqualScore[player1score];
+    }
+    //Simplificar condicional
+    private boolean isMayor(int value, int num){
+        return value>num;
+    }
+    //encapsulamiento
+    public int getPlayer1score() {
+        return player1score;
+    }
+    //encapsulamiento
+    public int getPlayer2score() {
+        return player2score;
+    }
+    //encapsulamiento
+    public String getPlayer1Name() {
+        return player1Name;
+    }
+    //encapsulamiento
+    public String getPlayer2Name() {
+        return player2Name;
     }
 }
